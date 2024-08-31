@@ -1,19 +1,19 @@
 function createPromise(position, delay) {
   const shouldResolve = Math.random() > 0.3;
   if (shouldResolve) {
-    new Promise()
-      .then(({ position, delay }) => {
+    new Promise((ok, e) => setTimeout(ok => ok(), delay, ok))
+      .then(() => {
         console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
       })
-      .catch(({ position, delay }) => {
+      .catch(() => {
         console.log(`❌ Rejected promise ${position} in ${delay}ms`);
       });
   } else {
-    new Promise()
-      .then(({ position, delay }) => {
+    new Promise((ok, e) => setTimeout(e => e(), delay, e))
+      .then(() => {
         console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
       })
-      .catch(({ position, delay }) => {
+      .catch(() => {
         console.log(`❌ Rejected promise ${position} in ${delay}ms`);
       });
   }
@@ -27,6 +27,7 @@ const btn = document.querySelector('[type="submit"]');
 btn.addEventListener('click', e => {
   e.preventDefault();
   for (let i = 0; i < parseInt(amount.value); i++) {
-    createPromise(1, 1);
+    // console.log(delay.textContent);
+    createPromise(i + 1, parseInt(delay.value) + i * parseInt(step.value));
   }
 });
